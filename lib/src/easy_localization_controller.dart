@@ -147,6 +147,7 @@ class EasyLocalizationController extends ChangeNotifier {
   Future<Map<String, dynamic>> loadTranslationData(Locale locale) async =>
       _combineAssetLoaders(
         path: path,
+        translate: translate,
         locale: locale,
         assetLoader: assetLoader,
         useOnlyLangCode: useOnlyLangCode,

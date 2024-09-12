@@ -20,7 +20,7 @@ class EasyLocalizationController extends ChangeNotifier {
   final bool useFallbackTranslations;
   final bool saveLocale;
   final bool useOnlyLangCode;
-  Map<String, dynamic>? translate;
+  Map<String, Map<String, dynamic>>? translate;
   List<AssetLoader>? extraAssetLoaders;
   Translations? _translations, _fallbackTranslations;
   Translations? get translations => _translations;
@@ -178,7 +178,7 @@ class EasyLocalizationController extends ChangeNotifier {
         loaderFutures.add(loader.load(path, desiredLocale));
       }
     }else if(translate != null){
-        loaderFutures.add(Future.value(translate));
+        loaderFutures.add(Future.value(translate[desiredLocale.languageCode]));
     }
 
     await Future.wait(loaderFutures).then((List<Map<String, dynamic>?> value) {

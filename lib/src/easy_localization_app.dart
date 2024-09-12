@@ -91,7 +91,7 @@ class EasyLocalization extends StatefulWidget {
   /// ```
   final String? path;
 
-  final Map<String, dynamic>? translate;
+  final Map<String, Map<String, dynamic>>? translate;
 
   /// Class loader for localization files.
   /// You can use custom loaders from [Easy Localization Loader](https://github.com/aissat/easy_localization_loader) or create your own class.

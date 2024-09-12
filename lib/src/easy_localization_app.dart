@@ -89,7 +89,9 @@ class EasyLocalization extends StatefulWidget {
   /// path: 'assets/translations',
   /// path: 'assets/translations/lang.csv',
   /// ```
-  final String path;
+  final String? path;
+
+  final Map<String, dynamic>? translate;
 
   /// Class loader for localization files.
   /// You can use custom loaders from [Easy Localization Loader](https://github.com/aissat/easy_localization_loader) or create your own class.
@@ -131,7 +133,8 @@ class EasyLocalization extends StatefulWidget {
     Key? key,
     required this.child,
     required this.supportedLocales,
-    required this.path,
+    this.path,
+    this.translate,
     this.fallbackLocale,
     this.startLocale,
     this.useOnlyLangCode = false,
@@ -143,7 +146,7 @@ class EasyLocalization extends StatefulWidget {
     this.saveLocale = true,
     this.errorWidget,
   })  : assert(supportedLocales.isNotEmpty),
-        assert(path.isNotEmpty),
+        assert(path != null || translate != null),
         super(key: key) {
     EasyLocalization.logger.debug('Start');
   }

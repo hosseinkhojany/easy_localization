@@ -16,10 +16,11 @@ class EasyLocalizationController extends ChangeNotifier {
 
   final Function(FlutterError e) onLoadError;
   final AssetLoader assetLoader;
-  final String path;
+  String? path;
   final bool useFallbackTranslations;
   final bool saveLocale;
   final bool useOnlyLangCode;
+  Map<String, dynamic>? translate;
   List<AssetLoader>? extraAssetLoaders;
   Translations? _translations, _fallbackTranslations;
   Translations? get translations => _translations;
@@ -30,10 +31,11 @@ class EasyLocalizationController extends ChangeNotifier {
     required this.useFallbackTranslations,
     required this.saveLocale,
     required this.assetLoader,
-    required this.path,
+    this.path,
     required this.useOnlyLangCode,
     required this.onLoadError,
     this.extraAssetLoaders,
+    this.translate,
     Locale? startLocale,
     Locale? fallbackLocale,
     Locale? forceLocale, // used for testing
@@ -152,7 +154,8 @@ class EasyLocalizationController extends ChangeNotifier {
       );
 
   Future<Map<String, dynamic>> _combineAssetLoaders({
-    required String path,
+    String? path,
+    Map<String, dynamic>? translate,
     required Locale locale,
     required AssetLoader assetLoader,
     required bool useOnlyLangCode,
@@ -170,8 +173,12 @@ class EasyLocalizationController extends ChangeNotifier {
       if (extraAssetLoaders != null) ...extraAssetLoaders
     ];
 
-    for (final loader in loaders) {
-      loaderFutures.add(loader.load(path, desiredLocale));
+    if(path != null){
+      for (final loader in loaders) {
+        loaderFutures.add(loader.load(path, desiredLocale));
+      }
+    }else if(translate != null){
+        loaderFutures.add(Future.value(translate));
     }
 
     await Future.wait(loaderFutures).then((List<Map<String, dynamic>?> value) {

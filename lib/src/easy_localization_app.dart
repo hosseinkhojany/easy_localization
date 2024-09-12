@@ -187,6 +187,7 @@ class _EasyLocalizationState extends State<EasyLocalization> {
       useOnlyLangCode: widget.useOnlyLangCode,
       useFallbackTranslations: widget.useFallbackTranslations,
       path: widget.path,
+      translate: widget.translate,
       onLoadError: (FlutterError e) {
         setState(() {
           translationsLoadError = e;
